@@ -43,7 +43,7 @@ def control_ports(ip):
             
 def mac_finder(scan_ip):
     request = scapy.ARP(pdst=scan_ip)
-    broadcast = scapy.Ether("ff:ff:ff:ff:ff:ff")
+    broadcast = scapy.Ether(dst="ff:ff:ff:ff:ff:ff")
     
     broadcast_request = broadcast/request
     
@@ -100,7 +100,8 @@ try:
         control_ports(scan_ip)
     elif operation == 3:
         scan_ip = input("Enter ip for scan: ")
-        print(mac_finder(scan_ip))
+        target_mac = mac_finder(scan_ip)
+        print(target_mac)
     elif operation == 4:
         target_ip = input("Enter target ip: ")
         router_ip = input("Enter router ip: ")
