@@ -10,9 +10,7 @@ banner = pyfiglet.figlet_format("QrNX's MITM All in One Tool\n")
 print(banner)
 
 #Functions
-def network_scanner():
-    scan_ip = input("Enter ip for scan: ")
-    
+def network_scanner(scan_ip):
     request = scapy.ARP(pdst=scan_ip)
     broadcast = scapy.Ether("ff:ff:ff:ff:ff:ff")
     
@@ -86,16 +84,17 @@ def analyze_packets(packet):
         if packet.haslayer(scapy.Raw):
             print(packet[scapy.Raw].load())
 
-operation = input("Select your operation!\n"
+operation = int(input("Select your operation!\n"
       "1-Network Scanner\n"
       "2-Port Scanner\n"
       "3-MAC Finder\n"
       "4-ARP Poison\n"
-      "5-Packet Sniffer\n")
+      "5-Packet Sniffer\n"))
 
 try:
     if operation == 1:
-        network_scanner()
+        scan_ip = input("Enter ip for scan: ")
+        network_scanner(scan_ip)
     elif operation == 2:
         scan_ip = input("Enter ip for scan: ")
         control_ports(scan_ip)
