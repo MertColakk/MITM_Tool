@@ -12,7 +12,7 @@ print(banner)
 #Functions
 def network_scanner(scan_ip):
     request = scapy.ARP(pdst=scan_ip)
-    broadcast = scapy.Ether("ff:ff:ff:ff:ff:ff")
+    broadcast = scapy.Ether(dst="ff:ff:ff:ff:ff:ff")
     
     broadcast_request = broadcast/request
     
